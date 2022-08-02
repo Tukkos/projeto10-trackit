@@ -56,8 +56,8 @@ a {
 }
 body {
     font-family: 'Lexend Deca', sans-serif;
+	background-color: #e5e5e5;
 }
-.appTitle {
-	font-family: 'Playball', cursive;
-}
-`
+`;
+
+export default GlobalStyle;

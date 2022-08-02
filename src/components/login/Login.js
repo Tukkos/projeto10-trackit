@@ -1,15 +1,39 @@
 import styled from "styled-components";
+import { postLogin } from "../../services/tracklt";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Login() {
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setUserPassword] = useState("");
 
     function login(e) {
         e.preventDefault();
 
-        console.log(userEmail, userPassword)
+        if (userEmail === "") {
+            alert("Favor inserir seu email.");
+        }
+        if (userPassword === "") {
+            alert("Favor escolher uma senha.");
+        } else {
+            setLoading(false);
+
+            const login = {
+                email: userEmail,
+                password: userPassword
+            }
+
+            postLogin(login).then((res) => {navigate("/hoje", res)});
+            postLogin(login).catch(() => {
+                alert("Falha ao fazer login, favor tentar novamente.");
+                setLoading(true);
+            })
+        }
+
     }
 
     return (
@@ -21,14 +45,19 @@ export default function Login() {
                     type="email"
                     value={userEmail}
                     placeholder="email"
-                    onChange={e => setUserEmail(e.target.value)} />
+                    onChange={e => setUserEmail(e.target.value)}
+                    disabled = {(loading) ? "" : "disabled"} />
+
                 <input
                     className="inputBar"
                     type="password"
                     value={userPassword}
                     placeholder="senha"
-                    onChange={e => setUserPassword(e.target.value)} />
-                <button type="submit" className="button">Fazer login</button>
+                    onChange={e => setUserPassword(e.target.value)}
+                    disabled = {(loading) ? "" : "disabled"} />
+                
+                {(loading) ? <button type="submit" className="button">Fazer login</button>
+                    : <button className="button"><ThreeDots color="#ffffff" height={40} width={40} /></button>}
             </form>
             <Link to="/cadastro"><span className="link">Não tem uma conta? Cadastre-se!</span></Link >
         </LoginScreen>
@@ -99,6 +128,9 @@ const LoginScreen = styled.div`
     margin-bottom: 25px;
 
     font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .link {
     font-size: 15px;

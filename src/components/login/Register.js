@@ -1,16 +1,21 @@
 import styled from "styled-components";
+import { postRegister } from "../../services/tracklt";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Register() {
+    const [loading, setLoading] = useState(true);
+
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setUserPassword] = useState("");
     const [userName, setUserName] = useState("");
     const [userImg, setUserImg] = useState("");
 
+    const navigate = useNavigate();
+
     function register(e) {
         e.preventDefault();
-        console.log(userEmail, userPassword, userName, userImg);
 
         if (userEmail === "") {
             alert("Favor inserir seu email.");
@@ -24,14 +29,20 @@ export default function Register() {
         if (userImg === "") {
             alert("Favor colocar um link de uma imagem para perfil.")
         } else {
+            setLoading(false);
+
             const userInfo = {
                 email: userEmail,
                 name: userName,
                 image: userImg,
                 password: userPassword
             }
-            console.log(userInfo);
-            // postRegister(userInfo);
+
+            postRegister(userInfo).then(() => {navigate("/", {})});
+            postRegister(userInfo).catch(() => {
+                alert("Falha ao fazer cadastro, favor rever seus dados.");
+                setLoading(true);
+            });
         }
     }
     
@@ -44,26 +55,35 @@ export default function Register() {
                     type="email"
                     value={userEmail}
                     placeholder="email"
-                    onChange={e => setUserEmail(e.target.value)} />
+                    onChange={e => setUserEmail(e.target.value)}
+                    disabled = {(loading) ? "" : "disabled"} />
+
                 <input
                     className="inputBar"
                     type="password"
                     value={userPassword}
                     placeholder="senha"
-                    onChange={e => setUserPassword(e.target.value)} />
+                    onChange={e => setUserPassword(e.target.value)}
+                    disabled = {(loading) ? "" : "disabled"} />
+
                 <input
                     className="inputBar"
                     type="text"
                     value={userName}
                     placeholder="nome"
-                    onChange={e => setUserName(e.target.value)} />
+                    onChange={e => setUserName(e.target.value)}
+                    disabled = {(loading) ? "" : "disabled"} />
+
                 <input
                     className="inputBar"
                     type="text"
                     value={userImg}
                     placeholder="foto"
-                    onChange={e => setUserImg(e.target.value)} />
-                <button type="submit" className="button">Fazer login</button>
+                    onChange={e => setUserImg(e.target.value)}
+                    disabled = {(loading) ? "" : "disabled"} />
+
+                {(loading) ? <button type="submit" className="button">Cadastrar</button>
+                    : <button className="button"><ThreeDots color="#ffffff" height={40} width={40} /></button>}
             </form>
             <Link to="/"><span className="link">Já tem uma conta? Faça login!</span></Link >
         </LoginScreen>
@@ -134,6 +154,9 @@ const LoginScreen = styled.div`
     margin-bottom: 25px;
 
     font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .link {
     font-size: 15px;

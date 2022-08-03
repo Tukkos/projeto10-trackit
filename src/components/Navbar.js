@@ -1,10 +1,15 @@
 import styled from "styled-components";
+import { useContext } from "react";
+
+import LoginContext from "../contexts/LoginContexts";
 
 export default function Navbar() {
+    const {loginInfos} = useContext(LoginContext);
+
     return (
         <NavbarStyle>
             <div className="appTitle">TrackIt</div>
-            <img src="https://i.pinimg.com/originals/3c/cb/3d/3ccb3d22e082f67a5b97858f3cf5793f.png" alt="" className="userImg" />
+            <img src={loginInfos[0].image} alt="" className="userImg" />
         </NavbarStyle>
     );
 }

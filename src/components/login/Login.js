@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { postLogin } from "../../services/tracklt";
 import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 
-export default function Login() {
+export default function Login({setLoginInfos}) {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -27,7 +27,12 @@ export default function Login() {
                 password: userPassword
             }
 
-            postLogin(login).then((res) => {navigate("/hoje", res)});
+            postLogin(login).then((res) => {
+                setLoginInfos([res.data])
+                navigate("/hoje", res.data);
+                // console.log(res.data);
+            });
+
             postLogin(login).catch(() => {
                 alert("Falha ao fazer login, favor tentar novamente.");
                 setLoading(true);

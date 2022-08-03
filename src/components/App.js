@@ -7,7 +7,9 @@ import LoginContext from "../contexts/LoginContexts";
 
 import Login from "../components/login/Login";
 import Register from "../components/login/Register";
-import Today from "./Today";
+import Today from "./screens/Today";
+import Habits from "./screens/Habits";
+import Historic from "./screens/Historic";
 
 export default function App() {
     const [loginInfos, setLoginInfos] = useState([]);
@@ -24,6 +26,10 @@ export default function App() {
                             <Route path="/cadastro" element={<Register />} />
                             
                             <Route path="/hoje" element={<Today />} />
+
+                            <Route path="/habitos" element={<Habits />} />
+
+                            <Route path="/historico" element={<Historic />}/>
                             
                         </Routes>
                     </LoginContext.Provider>

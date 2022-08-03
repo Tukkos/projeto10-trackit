@@ -1,5 +1,5 @@
-import Navbar from "./Navbar";
-import Menu from "./Menu";
+import Navbar from "../Navbar";
+import Menu from "../Menu";
 
 export default function Today() {
     return(

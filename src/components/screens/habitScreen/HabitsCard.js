@@ -52,7 +52,6 @@ export default function HabitsCard({habitName, habitDays, habitId, setHabits}) {
 
 const HabitCardStyled = styled.div`
     width: 90vw;
-    /* height:180px; */
     margin-bottom: 20px;
 
     background-color: #ffffff;

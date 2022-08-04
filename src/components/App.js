@@ -7,7 +7,7 @@ import LoginContext from "../contexts/LoginContexts";
 
 import Login from "../components/login/Login";
 import Register from "../components/login/Register";
-import Today from "./screens/Today";
+import Today from "./screens/todayScreen/Today";
 import Habits from "./screens/habitScreen/Habits";
 import Historic from "./screens/Historic";
 

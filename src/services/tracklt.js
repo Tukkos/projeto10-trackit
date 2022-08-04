@@ -17,8 +17,8 @@ function postCreateHabit(habit) {
     return promise;
 }
 
-function getHabits() {
-    const promise = axios.get(`${BASE_URL}/habits`);
+function getHabits(habitsAuth) {
+    const promise = axios.get(`${BASE_URL}/habits`, habitsAuth);
     return promise;
 }
 

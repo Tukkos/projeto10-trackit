@@ -1,14 +1,14 @@
-import Navbar from "../Navbar";
-import Menu from "../Menu";
+import Navbar from "../../Navbar";
+import Menu from "../../Menu";
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
-import { getHabits } from "../../services/tracklt";
-import LoginContext from "../../contexts/LoginContexts";
+import { getHabits } from "../../../services/tracklt";
+import LoginContext from "../../../contexts/LoginContexts";
 
 import NewHabits from "./NewHabit";
 import HabitsCard from "./HabitsCard";
 
-export default function Today() {
+export default function Habits() {
     const {loginInfos} = useContext(LoginContext);
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
@@ -39,7 +39,7 @@ export default function Today() {
 
                 {(addNew) ? <NewHabits setAddNew={setAddNew} setHabits={setHabits} /> : ""}
 
-                {(habits === undefined) ? <div className="noHabit"> {noHabits} </div>
+                {(habits.length === 0) ? <div className="noHabit"> {noHabits} </div>
                     : ""}
                 
                 {habits.map((hab) => (

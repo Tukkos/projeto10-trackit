@@ -1,7 +1,7 @@
 import Navbar from "../Navbar";
 import Menu from "../Menu";
 
-export default function Habits() {
+export default function Today() {
     return(
         <>
             <Navbar />

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import LoginContext from "../../contexts/LoginContexts";
-import { deleteHabits, getHabits } from "../../services/tracklt";
+import LoginContext from "../../../contexts/LoginContexts";
+import { deleteHabits, getHabits } from "../../../services/tracklt";
 
 export default function HabitsCard({habitName, habitDays, habitId, setHabits}) {
     const {loginInfos} = useContext(LoginContext);

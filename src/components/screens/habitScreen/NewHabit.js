@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
 import Day from "./Day";
-import LoginContext from "../../contexts/LoginContexts";
-import { getHabits, postCreateHabit } from "../../services/tracklt";
+import LoginContext from "../../../contexts/LoginContexts";
+import { getHabits, postCreateHabit } from "../../../services/tracklt";
 import { ThreeDots } from "react-loader-spinner";
 
 export default function NewHabits({setAddNew, setHabits}) {

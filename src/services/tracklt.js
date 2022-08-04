@@ -22,8 +22,8 @@ function getHabits(habitsAuth) {
     return promise;
 }
 
-function deleteHabits(iDHabit) {
-    const promise = axios.delete(`${BASE_URL}/habits/${iDHabit}`);
+function deleteHabits(iDHabit, habitsAuth) {
+    const promise = axios.delete(`${BASE_URL}/habits/${iDHabit}`, habitsAuth);
     return promise;
 }
 

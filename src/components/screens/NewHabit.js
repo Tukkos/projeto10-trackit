@@ -58,19 +58,16 @@ export default function NewHabits({setAddNew, setHabits}) {
             event.preventDefault();
             setLoading(false);
 
-            console.log(habitName);
             const habitLst = {
                 name: habitName,
                 days: weekdays
             }
 
             postCreateHabit(habitLst, habitsAuth).then((res) => {
-                console.log(res);
                 hideNewHabit();
                 setLoading(true);
                 getHabits(habitsAuth).then((response) => {
-                    console.log(response)
-                    setHabits(response)
+                    setHabits(response.data)
                 });
             })
         }

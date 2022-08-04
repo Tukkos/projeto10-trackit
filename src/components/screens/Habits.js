@@ -6,24 +6,23 @@ import { getHabits } from "../../services/tracklt";
 import LoginContext from "../../contexts/LoginContexts";
 
 import NewHabits from "./NewHabit";
+import HabitsCard from "./HabitsCard";
 
 export default function Today() {
     const {loginInfos} = useContext(LoginContext);
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
     
-    const [habits, setHabits] = useState(0);
+    const [habits, setHabits] = useState([]);
     const [addNew, setAddNew] = useState(false);
-    
     const noHabits = "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!"
-    console.log(habits);
 
     useEffect(() => {
         getHabits(habitsAuth).then((res) => {
-            console.log(res)
-            setHabits(res)
+            setHabits(res.data);
+            console.log(res.data);
         });
-    }, []);
+    }, [""]);
 
     function showNewHabit() {
         setAddNew(true);
@@ -37,8 +36,15 @@ export default function Today() {
                     Meus hábitos
                     <div className="button" onClick={showNewHabit}>+</div>
                 </div>
+
                 {(addNew) ? <NewHabits setAddNew={setAddNew} setHabits={setHabits} /> : ""}
-                {(habits === undefined) ? <div className="noHabit"> {noHabits} </div> : <div>Habitos</div>}
+
+                {(habits === undefined) ? <div className="noHabit"> {noHabits} </div>
+                    : ""}
+                
+                {habits.map((hab) => (
+                    <HabitsCard habitName={hab.name} habitDays={hab.days} habitId={hab.id} setHabits={setHabits} />
+                ))}
             </TodayScreen>
             <Menu />
         </>

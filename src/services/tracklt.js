@@ -12,8 +12,8 @@ function postLogin(login) {
     return promise;
 }
 
-function postCreateHabit(habit) {
-    const promise = axios.post(`${BASE_URL}/habits`, habit);
+function postCreateHabit(habit, habitsAuth) {
+    const promise = axios.post(`${BASE_URL}/habits`, habit, habitsAuth);
     return promise;
 }
 

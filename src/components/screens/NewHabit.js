@@ -1,7 +1,18 @@
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import Day from "./Day";
+import LoginContext from "../../contexts/LoginContexts";
+import { getHabits, postCreateHabit } from "../../services/tracklt";
+import { ThreeDots } from "react-loader-spinner";
 
-export default function NewHabits({setAddNew}) {
+export default function NewHabits({setAddNew, setHabits}) {
+    const {loginInfos} = useContext(LoginContext);
+    const token = loginInfos[0].token;
+    const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
+
+    const [loading, setLoading] = useState(true);
+    const [habitName, setHabitName] = useState("");
+    const [weekdays, setWeekdays] = useState([]);
     const days = [
     {
         id: 0,
@@ -36,26 +47,63 @@ export default function NewHabits({setAddNew}) {
         setAddNew(false);
     }
 
+    function sendNewHabit(event){
+        if (habitName === "") {
+            alert("Favor preencher o nome do hábito");
+        }
+        if (weekdays.length === 0) {
+            alert("Favor escolher os dias da semana para aquele hábito");
+        } 
+        if (habitName !== "" && weekdays.length !== 0) {
+            event.preventDefault();
+            setLoading(false);
+
+            console.log(habitName);
+            const habitLst = {
+                name: habitName,
+                days: weekdays
+            }
+
+            postCreateHabit(habitLst, habitsAuth).then((res) => {
+                console.log(res);
+                hideNewHabit();
+                setLoading(true);
+                getHabits(habitsAuth).then((response) => {
+                    console.log(response)
+                    setHabits(response)
+                });
+            })
+        }
+        
+    }
+
     return (
         <NewHabitStyled>
             <input
                 className="inputBar"
                 type="text"
-                // value={habitName}
+                value={habitName}
                 placeholder="nome do hábito"
-                // onChange={e => setUserEmail(e.target.value)}
+                onChange={e => setHabitName(e.target.value)}
+                disabled = {(loading) ? "" : "disabled"}
             ></input>
             <div className="semana">
                 {days.map((day) => (
                     <Day 
                         day={day.day}
-                        key={day.id}
+                        id={day.id}
+                        weekdays={weekdays}
+                        setWeekdays={setWeekdays}
+                        loading={loading}
                     />
                 ))}
             </div>
             <div>
-                <button className="cancelar" onClick={hideNewHabit} >Cancelar</button>
-                <button className="salvar">Salvar</button>
+                {(loading) ? <button className="cancelar" onClick={hideNewHabit} >Cancelar</button>
+                    : <button className="cancelar" >Cancelar</button>}
+
+                {(loading) ? <button className="salvar" onClick={sendNewHabit}>Salvar</button>
+                    : <button className="salvar"><ThreeDots color="#ffffff" height={40} width={40} /></button>}
             </div>
         </NewHabitStyled>
     );
@@ -121,6 +169,10 @@ const NewHabitStyled = styled.div`
     font-size: 15px;
     border: 0;
     border-radius: 5px;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
 
     position: absolute;
     bottom: 20px;

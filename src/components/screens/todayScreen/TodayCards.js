@@ -1,7 +1,7 @@
 import { useState } from "react"
 import styled from "styled-components"
 
-export default function TodayCards() {
+export default function TodayCards({setSSomethingDone}) {
     const [doneIcon, setDoneIcon] = useState("");
     const [doneText, setDoneText] = useState("");
     const [doneRecord, setDoneRecord] = useState("");
@@ -11,12 +11,14 @@ export default function TodayCards() {
             setDoneIcon("greenBackground");
             setDoneText("greenColor");
             setDoneRecord("greenColor");
+            setSSomethingDone(true);
         }
 
         if (doneIcon === "greenBackground") {
             setDoneIcon("");
             setDoneText("");
             setDoneRecord("");
+            setSSomethingDone(true);
         }
     }
 

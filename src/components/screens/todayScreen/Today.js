@@ -3,20 +3,27 @@ import Menu from "../../Menu";
 import TodayCards from "./TodayCards";
 import styled from "styled-components";
 import { useState } from "react";
+import dayjs from "dayjs";
+import "dayjs/locale/pt";
+
 
 export default function Today() {
     const [sSomethingDone, setSSomethingDone] = useState(false);
+    let now = dayjs().locale("pt").format("dddd, DD/MM");
+    console.log(now)
+
     return(
         <TodayStyled>
             <Navbar />
             <div>
-                <p className="todayTitle">Segunda, 17/05</p>
+                <p className="todayTitle">{now.charAt(0).toUpperCase() + now.slice(1)}</p>
                 {(sSomethingDone) ? <p className="todayProgress">67% dos hábitos concluídos!!</p>
                     : <p className="nothingDone">Nenhum hábito concluído ainda. :/</p>}
             </div>
             <div>
-                <TodayCards />
-                <TodayCards />
+                <TodayCards setSSomethingDone={setSSomethingDone} />
+                <TodayCards setSSomethingDone={setSSomethingDone} />
+                <TodayCards setSSomethingDone={setSSomethingDone} />
             </div>
             <Menu />
         </TodayStyled>

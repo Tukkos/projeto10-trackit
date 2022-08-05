@@ -15,17 +15,11 @@ export default function TodayCards({setSSomethingDone, setHabits, currentSequenc
 
     useEffect(() => {
         if (done === true) {
-            setDoneIcon("greenBackground");
-            setDoneText("greenColor");
-            if (highestSequence >= currentSequence) {
-                setDoneRecord("greenColor");
-            }
+            habitDone();
         }
 
         if (done === false) {
-            setDoneIcon("");
-            setDoneText("");
-            setDoneRecord("");
+            habitUndone();
         }
     }, [""]);
 
@@ -33,6 +27,20 @@ export default function TodayCards({setSSomethingDone, setHabits, currentSequenc
         getTodayHabits(habitsAuth).then((res) => {
             setHabits(res.data);
         })
+    }
+
+    function habitDone() {
+        setDoneIcon("greenBackground");
+        setDoneText("greenColor");
+        if (highestSequence >= currentSequence) {
+            setDoneRecord("greenColor");
+        }
+    }
+
+    function habitUndone() {
+        setDoneIcon("");
+        setDoneText("");
+        setDoneRecord("");
     }
 
     console.log(habitsAuth);
@@ -43,17 +51,15 @@ export default function TodayCards({setSSomethingDone, setHabits, currentSequenc
             postHabitsAsDone(habitId, habitsAuth).then(() => {
                 refresHabits(habitsAuth);
                 setSSomethingDone(true);
-                console.log(habitsAuth);
-                console.log(habitId);
+                habitDone();
             })
             
         }
 
-        if (sDone === true) {
+        if (done === true) {
             postHabitsAsUndone(habitId, habitsAuth).then(() => {
                 refresHabits(habitsAuth);
-                console.log(habitsAuth);
-                console.log(habitId);
+                habitUndone();
             })
         }
     }

@@ -1,36 +1,65 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
+import { postHabitsAsDone, postHabitsAsUndone, getTodayHabits } from "../../../services/tracklt";
+import LoginContext from "../../../contexts/LoginContexts";
 
-export default function TodayCards({setSSomethingDone, currentSequence, highestSequence, done, id, name}) {
+export default function TodayCards({setSSomethingDone, setHabits, currentSequence, highestSequence, done, habitId, name}) {
+    const {loginInfos} = useContext(LoginContext);
+    const token = loginInfos[0].token;
+    const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
+
     const [sDone, setSDone] = useState(done)
     const [doneIcon, setDoneIcon] = useState("");
     const [doneText, setDoneText] = useState("");
     const [doneRecord, setDoneRecord] = useState("");
 
-    function markAsDone() {
-        if (sDone === false) {
-            
+    useEffect(() => {
+        if (done === true) {
             setDoneIcon("greenBackground");
             setDoneText("greenColor");
-            setSSomethingDone(true);
-            setSDone(true);
-
             if (highestSequence >= currentSequence) {
                 setDoneRecord("greenColor");
             }
         }
 
-        if (sDone === true) {
+        if (done === false) {
             setDoneIcon("");
             setDoneText("");
-            setSSomethingDone(true);
-            setSDone(false);
             setDoneRecord("");
+        }
+    }, [""]);
+
+    function refresHabits(habitsAuth) {
+        getTodayHabits(habitsAuth).then((res) => {
+            setHabits(res.data);
+        })
+    }
+
+    console.log(habitsAuth);
+    console.log(habitId);
+
+    function markAsDone() {
+        if (done === false) {
+            postHabitsAsDone(habitId, habitsAuth).then(() => {
+                refresHabits(habitsAuth);
+                setSSomethingDone(true);
+                console.log(habitsAuth);
+                console.log(habitId);
+            })
+            
+        }
+
+        if (sDone === true) {
+            postHabitsAsUndone(habitId, habitsAuth).then(() => {
+                refresHabits(habitsAuth);
+                console.log(habitsAuth);
+                console.log(habitId);
+            })
         }
     }
 
     return (
-        <TodayCardStyled key={id}>
+        <TodayCardStyled key={habitId}>
             <h1 className="habitName">
                 {name}
             </h1>

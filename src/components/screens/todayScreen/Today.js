@@ -21,6 +21,7 @@ export default function Today() {
     useEffect(() => {
         getTodayHabits(habitsAuth).then((res) => {
             setHabits(res.data);
+            console.log(habitsAuth);
         })
     }, [""]);
 
@@ -36,11 +37,11 @@ export default function Today() {
                 {habits.map((hab) => (
                     <TodayCards
                         setSSomethingDone={setSSomethingDone}
-                        // setHabits={setHabits}
+                        setHabits={setHabits}
                         currentSequence={hab.currentSequence}
                         highestSequence={hab.highestSequence}
                         done={hab.done}
-                        id={hab.id}
+                        habitId={hab.id}
                         name={hab.name}
                         />
                 ))}

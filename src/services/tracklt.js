@@ -27,18 +27,18 @@ function deleteHabits(iDHabit, habitsAuth) {
     return promise;
 }
 
-function getTodayHabits() {
-    const promise = axios.get(`${BASE_URL}/habits/today`);
+function getTodayHabits(habitsAuth) {
+    const promise = axios.get(`${BASE_URL}/habits/today`, habitsAuth);
     return promise;
 }
 
-function postHabitsAsDone(iDHabit) {
-    const promise = axios.post(`${BASE_URL}/habits/${iDHabit}/check`);
+function postHabitsAsDone(iDHabit, habitsAuth) {
+    const promise = axios.post(`${BASE_URL}/habits/${iDHabit}/check`, habitsAuth);
     return promise;
 }
 
-function postHabitsAsUndone(iDHabit) {
-    const promise = axios.post(`${BASE_URL}/habits/${iDHabit}/uncheck`);
+function postHabitsAsUndone(iDHabit, habitsAuth) {
+    const promise = axios.post(`${BASE_URL}/habits/${iDHabit}/uncheck`, habitsAuth);
     return promise;
 }
 

@@ -2,15 +2,27 @@ import Navbar from "../../Navbar";
 import Menu from "../../Menu";
 import TodayCards from "./TodayCards";
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/pt";
+import { getTodayHabits } from "../../../services/tracklt";
+import LoginContext from "../../../contexts/LoginContexts";
 
 
 export default function Today() {
+    const {loginInfos} = useContext(LoginContext);
+    const token = loginInfos[0].token;
+    const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
+
+    const [habits, setHabits] = useState([]);
     const [sSomethingDone, setSSomethingDone] = useState(false);
     let now = dayjs().locale("pt").format("dddd, DD/MM");
-    console.log(now)
+
+    useEffect(() => {
+        getTodayHabits(habitsAuth).then((res) => {
+            setHabits(res.data);
+        })
+    }, [""]);
 
     return(
         <TodayStyled>
@@ -21,9 +33,18 @@ export default function Today() {
                     : <p className="nothingDone">Nenhum hábito concluído ainda. :/</p>}
             </div>
             <div>
-                <TodayCards setSSomethingDone={setSSomethingDone} />
-                <TodayCards setSSomethingDone={setSSomethingDone} />
-                <TodayCards setSSomethingDone={setSSomethingDone} />
+                {habits.map((hab) => (
+                    <TodayCards
+                        setSSomethingDone={setSSomethingDone}
+                        // setHabits={setHabits}
+                        currentSequence={hab.currentSequence}
+                        highestSequence={hab.highestSequence}
+                        done={hab.done}
+                        id={hab.id}
+                        name={hab.name}
+                        />
+                ))}
+                {/* <TodayCards setSSomethingDone={setSSomethingDone} /> */}
             </div>
             <Menu />
         </TodayStyled>

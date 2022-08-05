@@ -1,37 +1,44 @@
 import { useState } from "react"
 import styled from "styled-components"
 
-export default function TodayCards({setSSomethingDone}) {
+export default function TodayCards({setSSomethingDone, currentSequence, highestSequence, done, id, name}) {
+    const [sDone, setSDone] = useState(done)
     const [doneIcon, setDoneIcon] = useState("");
     const [doneText, setDoneText] = useState("");
     const [doneRecord, setDoneRecord] = useState("");
 
     function markAsDone() {
-        if (doneIcon === "") {
+        if (sDone === false) {
+            
             setDoneIcon("greenBackground");
             setDoneText("greenColor");
-            setDoneRecord("greenColor");
             setSSomethingDone(true);
+            setSDone(true);
+
+            if (highestSequence >= currentSequence) {
+                setDoneRecord("greenColor");
+            }
         }
 
-        if (doneIcon === "greenBackground") {
+        if (sDone === true) {
             setDoneIcon("");
             setDoneText("");
-            setDoneRecord("");
             setSSomethingDone(true);
+            setSDone(false);
+            setDoneRecord("");
         }
     }
 
     return (
-        <TodayCardStyled>
+        <TodayCardStyled key={id}>
             <h1 className="habitName">
-                Ler 1 capitulo de livro
+                {name}
             </h1>
             <p>
-                Sequencia atual: <span className={doneText}>3 dias</span>
+                Sequencia atual: <span className={doneText}>{currentSequence} dias</span>
             </p>
             <p>
-                Seu recorde: <span className={doneRecord}>5 dias</span>
+                Seu recorde: <span className={doneRecord}>{highestSequence} dias</span>
             </p>
             <span className="space" />
             <div className={doneIcon}>

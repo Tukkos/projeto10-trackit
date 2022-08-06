@@ -42,8 +42,8 @@ function postHabitsAsUndone(iDHabit, habitsAuth) {
     return promise;
 }
 
-function getHabitsHistory() {
-    const promise = axios.get(`${BASE_URL}/habits/history/daily`);
+function getHabitsHistory(habitsAuth) {
+    const promise = axios.get(`${BASE_URL}/habits/history/daily`, habitsAuth);
     return promise;
 }
 

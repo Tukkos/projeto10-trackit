@@ -1,6 +1,7 @@
-import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { Link } from "react-router-dom";
+
+import styled from "styled-components";
 
 export default function Menu({habToDo, habDone}) {
     const needDominantBaselineFix = true;

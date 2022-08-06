@@ -1,12 +1,14 @@
-import Navbar from "../../Navbar";
-import Menu from "../../Menu";
-import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
+
 import { getHabits } from "../../../services/tracklt";
 import LoginContext from "../../../contexts/LoginContexts";
 
+import Navbar from "../../Navbar";
+import Menu from "../../Menu";
 import NewHabits from "./NewHabit";
 import HabitsCard from "./HabitsCard";
+
+import styled from "styled-components";
 
 export default function Habits({habToDo, habDone}) {
     const {loginInfos} = useContext(LoginContext);

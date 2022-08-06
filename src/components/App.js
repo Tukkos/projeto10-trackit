@@ -1,15 +1,16 @@
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import styled from "styled-components";
 import { useState } from "react";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 
-import GlobalStyles from "../styles/GlobalStyles";
 import LoginContext from "../contexts/LoginContexts";
+import GlobalStyles from "../styles/GlobalStyles";
 
 import Login from "../components/login/Login";
 import Register from "../components/login/Register";
 import Today from "./screens/todayScreen/Today";
 import Habits from "./screens/habitScreen/Habits";
 import Historic from "./screens/Historic";
+
+import styled from "styled-components";
 
 export default function App() {
     const [loginInfos, setLoginInfos] = useState([]);

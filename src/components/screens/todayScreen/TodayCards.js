@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react"
-import styled from "styled-components"
-import { postHabitsAsDone, postHabitsAsUndone, getTodayHabits } from "../../../services/tracklt";
-import LoginContext from "../../../contexts/LoginContexts";
 
-export default function TodayCards({setHabits, currentSequence, highestSequence, done, habitId, name, habToDo, habDone, setHabToDo, setHabDone, setPercent}) {
+import LoginContext from "../../../contexts/LoginContexts";
+import { postHabitsAsDone, postHabitsAsUndone } from "../../../services/tracklt";
+
+import styled from "styled-components"
+
+export default function TodayCards({currentSequence, highestSequence, done, habitId, name}) {
     const {loginInfos} = useContext(LoginContext);
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
@@ -14,57 +16,26 @@ export default function TodayCards({setHabits, currentSequence, highestSequence,
 
     useEffect(() => {
         if (done === true) {
-            habitDone();
-        }
-
-        if (done === false) {
-            habitUndone();
-        }
-
-    }, [done, habitDone]);
-
-    function habitDone() {
-        setDoneIcon("greenBackground");
-        setDoneText("greenColor");
-        if (highestSequence >= currentSequence) {
-            setDoneRecord("greenColor");
-        }
-    }
-
-    function habitUndone() {
-        setDoneIcon("");
-        setDoneText("");
-        setDoneRecord("");
-    }
-
-    function refresHabits(habitsAuth) {
-        getTodayHabits(habitsAuth).then((res) => {
-            setHabits(res.data);
-            setHabToDo(res.data.length);
-
-            setHabDone(0);
-            for (let i = 0; i < res.data.length; i++) {
-                if (res.data[i].done === true) {
-                    setHabDone(count => count +1);
-                }
+                setDoneIcon("greenBackground");
+            setDoneText("greenColor");
+            if (highestSequence >= currentSequence) {
+                setDoneRecord("greenColor");
             }
-            setPercent(() => habDone/habToDo*100);
-        })
-    }
+        }
+        if (done === false) {
+            setDoneIcon("");
+            setDoneText("");
+            setDoneRecord("");
+        }
+    }, [done]);
 
     function markAsDone() {
         if (done === false) {
-            postHabitsAsDone(habitId, habitsAuth).then(() => {
-                refresHabits(habitsAuth);
-                habitDone();
-            })
+            postHabitsAsDone(habitId, habitsAuth).then()
         }
 
         if (done === true) {
-            postHabitsAsUndone(habitId, habitsAuth).then(() => {
-                refresHabits(habitsAuth);
-                habitUndone();
-            })
+            postHabitsAsUndone(habitId, habitsAuth).then()
         }
     }
 

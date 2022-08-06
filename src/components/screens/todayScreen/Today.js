@@ -1,13 +1,15 @@
-import Navbar from "../../Navbar";
-import Menu from "../../Menu";
-import TodayCards from "./TodayCards";
-import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/pt";
-import { getTodayHabits } from "../../../services/tracklt";
-import LoginContext from "../../../contexts/LoginContexts";
 
+import LoginContext from "../../../contexts/LoginContexts";
+import { getTodayHabits } from "../../../services/tracklt";
+
+import Navbar from "../../Navbar";
+import Menu from "../../Menu";
+import TodayCards from "./TodayCards";
+
+import styled from "styled-components";
 
 export default function Today({habToDo, habDone, setHabToDo, setHabDone}) {
     const {loginInfos} = useContext(LoginContext);
@@ -44,17 +46,11 @@ export default function Today({habToDo, habDone, setHabToDo, setHabDone}) {
             <div>
                 {habits.map((hab) => (
                     <TodayCards
-                        setHabits={setHabits}
                         currentSequence={hab.currentSequence}
                         highestSequence={hab.highestSequence}
                         done={hab.done}
                         habitId={hab.id}
                         name={hab.name}
-                        habToDo={habToDo}
-                        habDone={habDone}
-                        setHabToDo={setHabToDo}
-                        setHabDone={setHabDone}
-                        setPercent={setPercent}
                     />
                 ))}
             </div>

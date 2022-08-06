@@ -1,10 +1,13 @@
-import Navbar from "../Navbar";
-import Menu from "../Menu";
 import { useContext, useState, useEffect } from "react";
-import { getHabitsHistory } from "../../services/tracklt";
 import dayjs from "dayjs";
 import "dayjs/locale/pt";
+
 import LoginContext from "../../contexts/LoginContexts";
+import { getHabitsHistory } from "../../services/tracklt";
+
+import Navbar from "../Navbar";
+import Menu from "../Menu";
+
 import styled from "styled-components";
 
 export default function Historic({habToDo, habDone}) {

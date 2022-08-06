@@ -66,7 +66,7 @@ export default function NewHabits({setAddNew, setHabits}) {
                 days: weekdays
             }
 
-            postCreateHabit(habitLst, habitsAuth).then((res) => {
+            postCreateHabit(habitLst, habitsAuth).then(() => {
                 hideNewHabit();
                 setLoading(true);
                 getHabits(habitsAuth).then((response) => {

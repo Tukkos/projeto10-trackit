@@ -13,6 +13,7 @@ export default function Historic() {
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
 
     const [habits, setHabits] = useState([]);
+    const noHistoric = "Em breve você poderá ver o histórico dos seus hábitos aqui!";
 
     useEffect(() => {
         getHabitsHistory(habitsAuth).then((res) => {
@@ -24,6 +25,8 @@ export default function Historic() {
     return(
         <HistoricStyled>
             <Navbar />
+                {(habits.length === 0) ? <div className="noHabit"> {noHistoric} </div>
+                        : ""}
                 {habits.map((hab) => (
                     <>
                         <div>
@@ -65,5 +68,9 @@ const HistoricStyled = styled.div`
 .habitName {
     font-size: 20px;
     margin: 20px 20px 20px 20px
+}
+.noHabit {
+    padding-top: 20px;
+    font-size: 20px;
 }
 `

@@ -14,40 +14,53 @@ export default function Today() {
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
 
+    // const [habTrackInfos, sethabTrackInfos] = useState({});
+
     const [habits, setHabits] = useState([]);
-    const [sSomethingDone, setSSomethingDone] = useState(false);
+    const [habToDo, setHabToDo] = useState(0);
+    const [habDone, setHabDone] = useState(0);
+    const [percent, setPercent] = useState(0);
     let now = dayjs().locale("pt").format("dddd, DD/MM");
 
     useEffect(() => {
         getTodayHabits(habitsAuth).then((res) => {
             setHabits(res.data);
-            console.log(habitsAuth);
+            setHabToDo(res.data.length);
+
+            for (let i = 0; i < res.data.length; i++) {
+                if (res.data[i].done === true) {
+                    setHabDone(count => count +1)
+                }
+            }
+
+            setPercent(() => habDone/habToDo*100);
         })
-    }, [""]);
+    }, []);
 
     return(
         <TodayStyled>
             <Navbar />
             <div>
                 <p className="todayTitle">{now.charAt(0).toUpperCase() + now.slice(1)}</p>
-                {(sSomethingDone) ? <p className="todayProgress">67% dos hábitos concluídos!!</p>
+                {(habDone > 0) ? <p className="todayProgress">{percent.toFixed(0)}% dos hábitos concluídos!!</p>
                     : <p className="nothingDone">Nenhum hábito concluído ainda. :/</p>}
             </div>
             <div>
                 {habits.map((hab) => (
                     <TodayCards
-                        setSSomethingDone={setSSomethingDone}
                         setHabits={setHabits}
                         currentSequence={hab.currentSequence}
                         highestSequence={hab.highestSequence}
                         done={hab.done}
                         habitId={hab.id}
                         name={hab.name}
-                        />
+                    />
                 ))}
-                {/* <TodayCards setSSomethingDone={setSSomethingDone} /> */}
             </div>
-            <Menu />
+            <Menu
+                habToDo={habToDo}
+                habDone={habDone}
+            />
         </TodayStyled>
     );
 }

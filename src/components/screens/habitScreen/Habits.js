@@ -20,9 +20,8 @@ export default function Habits() {
     useEffect(() => {
         getHabits(habitsAuth).then((res) => {
             setHabits(res.data);
-            console.log(res.data);
         });
-    }, [""]);
+    }, []);
 
     function showNewHabit() {
         setAddNew(true);

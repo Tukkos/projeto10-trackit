@@ -2,16 +2,14 @@ import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { Link } from "react-router-dom";
 
-export default function Menu() {
+export default function Menu({habToDo, habDone}) {
     const needDominantBaselineFix = true;
-    let habits = 10;
-    let totalHabits = 15;
 
     return (
         <MenuScreen>
             <Link to="/habitos" >Habitos</Link>
             <Link to="/hoje" className="progress">
-                <CircularProgressbar value={habits} maxValue={totalHabits} text={<tspan dx={needDominantBaselineFix ? -27 : 0} dy={needDominantBaselineFix ? 8 : 0}>Hoje</tspan>} styles={buildStyles({
+                <CircularProgressbar value={habDone} maxValue={habToDo} text={<tspan dx={needDominantBaselineFix ? -27 : 0} dy={needDominantBaselineFix ? 8 : 0}>Hoje</tspan>} styles={buildStyles({
                         strokeLinecap: "round",
                         textSize: "25px",
                         pathTransitionDuration: "1",

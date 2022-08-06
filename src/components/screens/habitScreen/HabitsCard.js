@@ -8,11 +8,9 @@ export default function HabitsCard({habitName, habitDays, habitId, setHabits}) {
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
 
-    console.log(habitDays);
-
     function deleteHabit() {
         if (window.confirm("Você realmente deseja deletar esse hábito?")) {
-            deleteHabits(habitId, habitsAuth).then((response) => {
+            deleteHabits(habitId, habitsAuth).then(() => {
                 getHabits(habitsAuth).then((response) => {
                     setHabits(response.data)
                 });

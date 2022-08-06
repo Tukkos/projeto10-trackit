@@ -3,12 +3,11 @@ import styled from "styled-components"
 import { postHabitsAsDone, postHabitsAsUndone, getTodayHabits } from "../../../services/tracklt";
 import LoginContext from "../../../contexts/LoginContexts";
 
-export default function TodayCards({setSSomethingDone, setHabits, currentSequence, highestSequence, done, habitId, name}) {
+export default function TodayCards({setHabits, currentSequence, highestSequence, done, habitId, name}) {
     const {loginInfos} = useContext(LoginContext);
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
 
-    const [sDone, setSDone] = useState(done)
     const [doneIcon, setDoneIcon] = useState("");
     const [doneText, setDoneText] = useState("");
     const [doneRecord, setDoneRecord] = useState("");
@@ -21,13 +20,8 @@ export default function TodayCards({setSSomethingDone, setHabits, currentSequenc
         if (done === false) {
             habitUndone();
         }
-    }, [""]);
 
-    function refresHabits(habitsAuth) {
-        getTodayHabits(habitsAuth).then((res) => {
-            setHabits(res.data);
-        })
-    }
+    }, [done, habitDone]);
 
     function habitDone() {
         setDoneIcon("greenBackground");
@@ -43,17 +37,18 @@ export default function TodayCards({setSSomethingDone, setHabits, currentSequenc
         setDoneRecord("");
     }
 
-    console.log(habitsAuth);
-    console.log(habitId);
+    function refresHabits(habitsAuth) {
+        getTodayHabits(habitsAuth).then((res) => {
+            setHabits(res.data);
+        })
+    }
 
     function markAsDone() {
         if (done === false) {
             postHabitsAsDone(habitId, habitsAuth).then(() => {
                 refresHabits(habitsAuth);
-                setSSomethingDone(true);
                 habitDone();
             })
-            
         }
 
         if (done === true) {

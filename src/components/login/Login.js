@@ -30,7 +30,6 @@ export default function Login({setLoginInfos}) {
             postLogin(login).then((res) => {
                 setLoginInfos([res.data])
                 navigate("/hoje", res.data);
-                // console.log(res.data);
             });
 
             postLogin(login).catch(() => {

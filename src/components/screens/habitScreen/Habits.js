@@ -8,7 +8,7 @@ import LoginContext from "../../../contexts/LoginContexts";
 import NewHabits from "./NewHabit";
 import HabitsCard from "./HabitsCard";
 
-export default function Habits() {
+export default function Habits({habToDo, habDone}) {
     const {loginInfos} = useContext(LoginContext);
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
@@ -45,7 +45,10 @@ export default function Habits() {
                     <HabitsCard habitName={hab.name} habitDays={hab.days} habitId={hab.id} setHabits={setHabits} />
                 ))}
             </TodayScreen>
-            <Menu />
+            <Menu
+                habToDo={habToDo}
+                habDone={habDone}
+            />
         </>
     );
 }

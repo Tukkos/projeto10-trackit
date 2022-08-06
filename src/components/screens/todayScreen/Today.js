@@ -9,16 +9,12 @@ import { getTodayHabits } from "../../../services/tracklt";
 import LoginContext from "../../../contexts/LoginContexts";
 
 
-export default function Today() {
+export default function Today({habToDo, habDone, setHabToDo, setHabDone}) {
     const {loginInfos} = useContext(LoginContext);
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
 
-    // const [habTrackInfos, sethabTrackInfos] = useState({});
-
     const [habits, setHabits] = useState([]);
-    const [habToDo, setHabToDo] = useState(0);
-    const [habDone, setHabDone] = useState(0);
     const [percent, setPercent] = useState(0);
     let now = dayjs().locale("pt").format("dddd, DD/MM");
 
@@ -27,22 +23,22 @@ export default function Today() {
             setHabits(res.data);
             setHabToDo(res.data.length);
 
+            setHabDone(0);
             for (let i = 0; i < res.data.length; i++) {
                 if (res.data[i].done === true) {
-                    setHabDone(count => count +1)
+                    setHabDone(count => count +1);
                 }
             }
-
             setPercent(() => habDone/habToDo*100);
         })
-    }, []);
+    }, [percent, habits]);
 
     return(
         <TodayStyled>
             <Navbar />
             <div>
                 <p className="todayTitle">{now.charAt(0).toUpperCase() + now.slice(1)}</p>
-                {(habDone > 0) ? <p className="todayProgress">{percent.toFixed(0)}% dos hábitos concluídos!!</p>
+                {(percent > 0) ? <p className="todayProgress">{percent.toFixed(0)}% dos hábitos concluídos!!</p>
                     : <p className="nothingDone">Nenhum hábito concluído ainda. :/</p>}
             </div>
             <div>
@@ -54,6 +50,11 @@ export default function Today() {
                         done={hab.done}
                         habitId={hab.id}
                         name={hab.name}
+                        habToDo={habToDo}
+                        habDone={habDone}
+                        setHabToDo={setHabToDo}
+                        setHabDone={setHabDone}
+                        setPercent={setPercent}
                     />
                 ))}
             </div>

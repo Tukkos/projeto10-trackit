@@ -13,6 +13,8 @@ import Historic from "./screens/Historic";
 
 export default function App() {
     const [loginInfos, setLoginInfos] = useState([]);
+    const [habToDo, setHabToDo] = useState(0);
+    const [habDone, setHabDone] = useState(0);
 
     return (
         <>
@@ -25,11 +27,25 @@ export default function App() {
 
                             <Route path="/cadastro" element={<Register />} />
                             
-                            <Route path="/hoje" element={<Today />} />
+                            <Route path="/hoje" element={
+                                <Today
+                                    habToDo={habToDo}
+                                    habDone={habDone}
+                                    setHabToDo={setHabToDo}
+                                    setHabDone={setHabDone
+                                } />} />
 
-                            <Route path="/habitos" element={<Habits />} />
+                            <Route path="/habitos" element={
+                                <Habits
+                                habToDo={habToDo}
+                                habDone={habDone}
+                            />} />
 
-                            <Route path="/historico" element={<Historic />}/>
+                            <Route path="/historico" element={
+                                <Historic
+                                    habToDo={habToDo}
+                                    habDone={habDone}
+                                />}/>
                             
                         </Routes>
                     </LoginContext.Provider>

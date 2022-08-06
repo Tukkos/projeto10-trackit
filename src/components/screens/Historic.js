@@ -7,7 +7,7 @@ import "dayjs/locale/pt";
 import LoginContext from "../../contexts/LoginContexts";
 import styled from "styled-components";
 
-export default function Historic() {
+export default function Historic({habToDo, habDone}) {
     const {loginInfos} = useContext(LoginContext);
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
@@ -41,7 +41,10 @@ export default function Historic() {
                         ))}
                     </>
                 ))}
-            <Menu />
+            <Menu
+                habToDo={habToDo}
+                habDone={habDone}
+            />
         </HistoricStyled>
     );
 }

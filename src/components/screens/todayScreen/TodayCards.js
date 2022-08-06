@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { postHabitsAsDone, postHabitsAsUndone, getTodayHabits } from "../../../services/tracklt";
 import LoginContext from "../../../contexts/LoginContexts";
 
-export default function TodayCards({setHabits, currentSequence, highestSequence, done, habitId, name}) {
+export default function TodayCards({setHabits, currentSequence, highestSequence, done, habitId, name, habToDo, habDone, setHabToDo, setHabDone, setPercent}) {
     const {loginInfos} = useContext(LoginContext);
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
@@ -40,6 +40,15 @@ export default function TodayCards({setHabits, currentSequence, highestSequence,
     function refresHabits(habitsAuth) {
         getTodayHabits(habitsAuth).then((res) => {
             setHabits(res.data);
+            setHabToDo(res.data.length);
+
+            setHabDone(0);
+            for (let i = 0; i < res.data.length; i++) {
+                if (res.data[i].done === true) {
+                    setHabDone(count => count +1);
+                }
+            }
+            setPercent(() => habDone/habToDo*100);
         })
     }
 

@@ -28,7 +28,8 @@ export default function Login({setLoginInfos}) {
             }
 
             postLogin(login).then((res) => {
-                setLoginInfos([res.data])
+                setLoginInfos([res.data]);
+                console.log(res.data);
                 navigate("/hoje", res.data);
             });
 

@@ -16,7 +16,7 @@ export default function Habits({habToDo, habDone}) {
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
     
     const [habits, setHabits] = useState([]);
-    const [addNew, setAddNew] = useState(false);
+    const [addNew, setAddNew] = useState("newHabitCard hidden");
     const noHabits = "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!"
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export default function Habits({habToDo, habDone}) {
     }, []);
 
     function showNewHabit() {
-        setAddNew(true);
+        setAddNew("newHabitCard");
     }
 
     return(
@@ -38,7 +38,7 @@ export default function Habits({habToDo, habDone}) {
                     <div className="button" onClick={showNewHabit}>+</div>
                 </div>
 
-                {(addNew) ? <NewHabits setAddNew={setAddNew} setHabits={setHabits} /> : ""}
+                <NewHabits setAddNew={setAddNew} setHabits={setHabits} addNew={addNew} />
 
                 {(habits.length === 0) ? <div className="noHabit"> {noHabits} </div>
                     : ""}

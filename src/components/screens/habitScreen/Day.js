@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Day({day, id, weekdays, setWeekdays, loading}) {
     const [chosenDay, setChosenDay] = useState("diaDaSemana");
+
+    useEffect(() => {
+        setChosenDay("diaDaSemana");
+    }, [weekdays]);
 
     function choseDay() {
         if (chosenDay === "diaDaSemana") {

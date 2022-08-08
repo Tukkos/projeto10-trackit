@@ -8,7 +8,7 @@ import Day from "./Day";
 
 import styled from "styled-components";
 
-export default function NewHabits({setAddNew, setHabits}) {
+export default function NewHabits({setAddNew, setHabits, addNew}) {
     const {loginInfos} = useContext(LoginContext);
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
@@ -47,7 +47,7 @@ export default function NewHabits({setAddNew, setHabits}) {
     }];
 
     function hideNewHabit() {
-        setAddNew(false);
+        setAddNew("newHabitCard hidden");
     }
 
     function sendNewHabit(event){
@@ -68,6 +68,8 @@ export default function NewHabits({setAddNew, setHabits}) {
 
             postCreateHabit(habitLst, habitsAuth).then(() => {
                 hideNewHabit();
+                setHabitName("");
+                setWeekdays([]);
                 setLoading(true);
                 getHabits(habitsAuth).then((response) => {
                     setHabits(response.data)
@@ -79,37 +81,40 @@ export default function NewHabits({setAddNew, setHabits}) {
 
     return (
         <NewHabitStyled>
-            <input
-                className="inputBar"
-                type="text"
-                value={habitName}
-                placeholder="nome do hábito"
-                onChange={e => setHabitName(e.target.value)}
-                disabled = {(loading) ? "" : "disabled"}
-            ></input>
-            <div className="semana">
-                {days.map((day) => (
-                    <Day 
-                        day={day.day}
-                        id={day.id}
-                        weekdays={weekdays}
-                        setWeekdays={setWeekdays}
-                        loading={loading}
-                    />
-                ))}
-            </div>
-            <div>
-                {(loading) ? <button className="cancelar" onClick={hideNewHabit} >Cancelar</button>
-                    : <button className="cancelar" >Cancelar</button>}
+            <div className={addNew}>
+                <input
+                    className="inputBar"
+                    type="text"
+                    value={habitName}
+                    placeholder="nome do hábito"
+                    onChange={e => setHabitName(e.target.value)}
+                    disabled = {(loading) ? "" : "disabled"}
+                ></input>
+                <div className="semana">
+                    {days.map((day) => (
+                        <Day 
+                            day={day.day}
+                            id={day.id}
+                            weekdays={weekdays}
+                            setWeekdays={setWeekdays}
+                            loading={loading}
+                        />
+                    ))}
+                </div>
+                <div>
+                    {(loading) ? <button className="cancelar" onClick={hideNewHabit} >Cancelar</button>
+                        : <button className="cancelar" >Cancelar</button>}
 
-                {(loading) ? <button className="salvar" onClick={sendNewHabit}>Salvar</button>
-                    : <button className="salvar"><ThreeDots color="#ffffff" height={40} width={40} /></button>}
+                    {(loading) ? <button className="salvar" onClick={sendNewHabit}>Salvar</button>
+                        : <button className="salvar"><ThreeDots color="#ffffff" height={40} width={40} /></button>}
+                </div>
             </div>
         </NewHabitStyled>
     );
 }
 
 const NewHabitStyled = styled.div`
+.newHabitCard {
     width: 90vw;
     height:180px;
     margin-bottom: 20px;
@@ -120,6 +125,10 @@ const NewHabitStyled = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
+}
+.hidden {
+    display:none;
+}
 .semana {
     display:flex;
     justify-content: flex-start;

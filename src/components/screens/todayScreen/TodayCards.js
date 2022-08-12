@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 
 import LoginContext from "../../../contexts/LoginContexts";
+import HabitTracker from "../../../contexts/HabitsTracker";
 import { postHabitsAsDone, postHabitsAsUndone } from "../../../services/tracklt";
 
 import styled from "styled-components"
@@ -10,33 +11,49 @@ export default function TodayCards({currentSequence, highestSequence, done, habi
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
 
+    const {habToDo, habDone, setPercent} = useContext(HabitTracker);
+
     const [doneIcon, setDoneIcon] = useState("");
     const [doneText, setDoneText] = useState("");
     const [doneRecord, setDoneRecord] = useState("");
 
     useEffect(() => {
         if (done === true) {
-                setDoneIcon("greenBackground");
-            setDoneText("greenColor");
-            if (highestSequence >= currentSequence) {
-                setDoneRecord("greenColor");
-            }
+            habitIsDone()
         }
         if (done === false) {
-            setDoneIcon("");
-            setDoneText("");
-            setDoneRecord("");
+            habitIsUndone()
         }
-    }, [done]);
+    }, []);
 
     function markAsDone() {
         if (done === false) {
-            postHabitsAsDone(habitId, habitsAuth).then()
+            postHabitsAsDone(habitId, habitsAuth).then(() => {
+                habitIsDone()
+            })
         }
 
         if (done === true) {
-            postHabitsAsUndone(habitId, habitsAuth).then()
+            postHabitsAsUndone(habitId, habitsAuth).then(() => {
+                habitIsUndone()
+            })
         }
+    }
+
+    function habitIsDone() {
+        setDoneIcon("greenBackground");
+        setDoneText("greenColor");
+        setPercent(() => habDone/habToDo*100);
+        if (highestSequence >= currentSequence) {
+            setDoneRecord("greenColor");
+        }
+    }
+
+    function habitIsUndone() {
+        setDoneIcon("");
+        setDoneText("");
+        setPercent(() => habDone/habToDo*100);
+        setDoneRecord("");
     }
 
     return (

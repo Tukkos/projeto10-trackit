@@ -2,6 +2,7 @@ import { useState } from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 import LoginContext from "../contexts/LoginContexts";
+import HabitTracker from "../contexts/HabitsTracker";
 import GlobalStyles from "../styles/GlobalStyles";
 
 import Login from "../components/login/Login";
@@ -16,6 +17,7 @@ export default function App() {
     const [loginInfos, setLoginInfos] = useState([]);
     const [habToDo, setHabToDo] = useState(0);
     const [habDone, setHabDone] = useState(0);
+    const [percent, setPercent] = useState(0);
 
     return (
         <>
@@ -23,32 +25,20 @@ export default function App() {
             <Wrapper>
                 <BrowserRouter>
                     <LoginContext.Provider value={{loginInfos}} >
-                        <Routes>
-                            <Route path="/" element={<Login setLoginInfos={setLoginInfos}/>} />
+                        <HabitTracker.Provider value={{habToDo, setHabToDo, habDone, setHabDone, percent, setPercent}} >
+                            <Routes>
+                                <Route path="/" element={<Login setLoginInfos={setLoginInfos}/>} />
 
-                            <Route path="/cadastro" element={<Register />} />
-                            
-                            <Route path="/hoje" element={
-                                <Today
-                                    habToDo={habToDo}
-                                    habDone={habDone}
-                                    setHabToDo={setHabToDo}
-                                    setHabDone={setHabDone
-                                } />} />
+                                <Route path="/cadastro" element={<Register />} />
+                                
+                                <Route path="/hoje" element={<Today />} />
 
-                            <Route path="/habitos" element={
-                                <Habits
-                                habToDo={habToDo}
-                                habDone={habDone}
-                            />} />
+                                <Route path="/habitos" element={<Habits />} />
 
-                            <Route path="/historico" element={
-                                <Historic
-                                    habToDo={habToDo}
-                                    habDone={habDone}
-                                />}/>
-                            
-                        </Routes>
+                                <Route path="/historico" element={<Historic />}/>
+                                
+                            </Routes>
+                        </HabitTracker.Provider>
                     </LoginContext.Provider>
                 </BrowserRouter>
             </Wrapper>

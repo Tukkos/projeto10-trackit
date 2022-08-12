@@ -10,7 +10,7 @@ import HabitsCard from "./HabitsCard";
 
 import styled from "styled-components";
 
-export default function Habits({habToDo, habDone}) {
+export default function Habits() {
     const {loginInfos} = useContext(LoginContext);
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
@@ -47,10 +47,7 @@ export default function Habits({habToDo, habDone}) {
                     <HabitsCard habitName={hab.name} habitDays={hab.days} habitId={hab.id} setHabits={setHabits} />
                 ))}
             </TodayScreen>
-            <Menu
-                habToDo={habToDo}
-                habDone={habDone}
-            />
+            <Menu />
         </>
     );
 }

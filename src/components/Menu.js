@@ -1,9 +1,13 @@
+import { useContext } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
+import HabitTracker from "../contexts/HabitsTracker";
 
-export default function Menu({habToDo, habDone}) {
+export default function Menu() {
+    const {habToDo, habDone} = useContext(HabitTracker);
+
     const needDominantBaselineFix = true;
 
     return (

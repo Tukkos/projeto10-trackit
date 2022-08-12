@@ -10,7 +10,7 @@ import Menu from "../Menu";
 
 import styled from "styled-components";
 
-export default function Historic({habToDo, habDone}) {
+export default function Historic() {
     const {loginInfos} = useContext(LoginContext);
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
@@ -44,10 +44,7 @@ export default function Historic({habToDo, habDone}) {
                         ))}
                     </>
                 ))}
-            <Menu
-                habToDo={habToDo}
-                habDone={habDone}
-            />
+            <Menu />
         </HistoricStyled>
     );
 }

@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt";
 
 import LoginContext from "../../../contexts/LoginContexts";
+import HabitTracker from "../../../contexts/HabitsTracker";
 import { getTodayHabits } from "../../../services/tracklt";
 
 import Navbar from "../../Navbar";
@@ -11,20 +12,20 @@ import TodayCards from "./TodayCards";
 
 import styled from "styled-components";
 
-export default function Today({habToDo, habDone, setHabToDo, setHabDone}) {
+export default function Today() {
     const {loginInfos} = useContext(LoginContext);
     const token = loginInfos[0].token;
     const habitsAuth = { headers: {"Authorization": "Bearer " + token}};
 
+    const {setHabDone, setHabToDo, setPercent, habDone, habToDo, percent} = useContext(HabitTracker);
+
     const [habits, setHabits] = useState([]);
-    const [percent, setPercent] = useState(0);
     let now = dayjs().locale("pt").format("dddd, DD/MM");
 
     useEffect(() => {
         getTodayHabits(habitsAuth).then((res) => {
             setHabits(res.data);
             setHabToDo(res.data.length);
-
             setHabDone(0);
             for (let i = 0; i < res.data.length; i++) {
                 if (res.data[i].done === true) {
@@ -33,7 +34,7 @@ export default function Today({habToDo, habDone, setHabToDo, setHabDone}) {
             }
             setPercent(() => habDone/habToDo*100);
         })
-    }, [percent, habits]);
+    }, [habits]);
 
     return(
         <TodayStyled>
@@ -51,13 +52,11 @@ export default function Today({habToDo, habDone, setHabToDo, setHabDone}) {
                         done={hab.done}
                         habitId={hab.id}
                         name={hab.name}
+                        setHabits={setHabits}
                     />
                 ))}
             </div>
-            <Menu
-                habToDo={habToDo}
-                habDone={habDone}
-            />
+            <Menu />
         </TodayStyled>
     );
 }

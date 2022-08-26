@@ -2,6 +2,8 @@
 
 An easy to use habit tracker. Create new habits, keep track of what you have to do today, mark them as done and see your habits historic.
 
+![TrackIt](https://i.imgur.com/R8X9SN4.gif)
+
 Try it out now: http://projeto10-trackit-tukkos.vercel.app/
 
 # About

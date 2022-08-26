@@ -1,3 +1,44 @@
+# TrackIt
+
+An easy to use habit tracker. Create new habits, keep track of what you have to do today, mark them as done and see your habits historic.
+
+Try it out now: http://projeto10-trackit-tukkos.vercel.app/
+
+# About
+
+This is an front-end web aplication project to easy tracking habits for people. The implemented features are:
+
+* Sign-up;
+* Login;
+* New habit creation;
+* Mark in wich days the habit should be done;
+* Track which habits you have;
+* Delete a habit;
+* Track wich habit you have to do today;
+* Get your progress through the day;
+* Get your progress over the weeks;
+* Have an historic of habits done.
+
+Next features to be implemented:
+
+* An calendar in historic with diferent colors;
+* Each color tells how was the progress in that day;
+* Option to see details of a chosen day;
+* Store login sesions;
+
+# Technologies
+
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Ionic](https://img.shields.io/badge/Ionic-%233880FF.svg?style=for-the-badge&logo=Ionic&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+![NPM](https://img.shields.io/badge/NPM-%23000000.svg?style=for-the-badge&logo=npm&logoColor=white)
+![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
